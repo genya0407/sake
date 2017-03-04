@@ -1,5 +1,6 @@
-require "sake/version"
+require 'numo/narray'
 
-module Sake
-  # Your code goes here...
-end
+require 'sake/version'
+require 'sake/series'
+require 'sake/index'
+require 'sake/monkeys'
