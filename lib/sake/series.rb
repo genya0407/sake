@@ -1,5 +1,5 @@
-require './series/init'
-require './series/to_html'
+require 'sake/series/init'
+require 'sake/series/to_html'
 
 class Sake::Series
   include ToHTML
