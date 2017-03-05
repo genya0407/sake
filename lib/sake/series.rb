@@ -25,7 +25,7 @@ class Sake::Series
   end
 
   def [](*sake_index)
-    if sake_index.length == 1 # e.g. series[2] or series[series > 10]
+    if sake_index.length == 1
       values[index.narray_index(sake_index.first)]
     else
       values_view = values[index.narray_index(sake_index)]
@@ -35,7 +35,13 @@ class Sake::Series
   end
   
   def []=(*sake_index, value)
-    values[index.narray_index(sake_index)] = value
+    if sake_index.length == 1
+      narray_index = index.narray_index(sake_index.first)
+    else
+      narray_index = index.narray_index(sake_index)
+    end
+
+    values[narray_index] = value
   end
 
   def each_with_index(&block)
@@ -46,6 +52,6 @@ class Sake::Series
   def compare(operator, other)
     sake_index = each_with_index.select { |value, _| value.send(operator, other) }
                                 .map { |_, sake_index| sake_index }
-    Condition.new(sake_index)
+    Sake::Index::Condition.new(sake_index)
   end
 end

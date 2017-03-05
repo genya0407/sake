@@ -17,12 +17,12 @@ class Sake::Index
     elsif arg.is_a? Condition
       positions_from_condition(arg)
     else
-      raise ArgumentError
+      positions_from_element(arg)
     end
   end
 
   def view(sake_index)
-    self.class.new(@array[positions(sake_index)])
+    self.class.new(@array[narray_index(sake_index)])
   end
   
   def length
@@ -35,8 +35,8 @@ class Sake::Index
 
   private
   def positions_from_index(array)
-    if sake_index.all? { |elem| @array.include? elem }
-      sake_index.map { |elem| @array.find_index(elem) }
+    if array.all? { |elem| @array.include? elem }
+      array.map { |elem| @array.find_index(elem) }
     else
       raise ArgumentError
     end
@@ -44,5 +44,13 @@ class Sake::Index
 
   def positions_from_condition(condition)
     positions_from_index(condition.array)
+  end
+
+  def positions_from_element(elem)
+    if @array.include? elem
+      @array.find_index(elem)
+    else
+      raise ArgumentError
+    end
   end
 end

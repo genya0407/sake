@@ -1,7 +1,11 @@
-class Sake::Index::Condition
-  attr_reader :array
+module Sake
+  class Index
+    class Condition
+      attr_reader :array
 
-  def initialize(array)
-    @array = array
+      def initialize(array)
+        @array = array
+      end
+    end
   end
 end
