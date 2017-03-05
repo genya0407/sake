@@ -20,7 +20,7 @@ class Sake::Index
   def length
     @array.length
   end
-  
+
   private
   def positions(sake_index)
     if sake_index.is_a? Array
