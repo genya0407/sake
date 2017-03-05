@@ -1,0 +1,12 @@
+<table>
+  <tr>
+    <th colspan="2">Sake::Series</th>
+  </tr>
+
+  <% self.each_with_index do |value, index| %>
+    <tr>
+      <td><%= index %></td>
+      <td><%= value %></td>
+    </tr>
+  <% end %>
+</table>

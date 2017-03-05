@@ -21,6 +21,10 @@ class Sake::Index
     @array.length
   end
 
+  def each(&block)
+    @array.each(&block)
+  end
+
   private
   def positions(sake_index)
     if sake_index.is_a? Array

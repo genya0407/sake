@@ -1,5 +1,9 @@
 require './series/init'
+require './series/to_html'
+
 class Sake::Series
+  include ToHTML
+
   attr_accessor :index, :values
   
   def initialize(source, index: nil, dtype: nil, direct: false)
@@ -28,5 +32,7 @@ class Sake::Series
     values[index.narray_index(sake_index)] = value
   end
 
+  def each_with_index(&block)
+    values.zip(index).each(&block)
   end
 end
