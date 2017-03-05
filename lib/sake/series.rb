@@ -1,3 +1,4 @@
+require './series/init'
 class Sake::Series
   attr_accessor :index, :values
   
@@ -6,13 +7,13 @@ class Sake::Series
       self.values = source
       self.index = index
     else
-      self.values = Initializer.initialize_values(source, dtype)
-      self.index = Initializer.initialize_index(source, index)
+      self.values = Init.initialize_values(source, dtype)
+      self.index = Init.initialize_index(source, index)
     end
     
     raise ArgumentError unless self.values.length == self.index.length
   end
-  
+
   def [](*sake_index)
     if sake_index.length == 1
       values[index.narray_index(sake_index.first)]
@@ -26,36 +27,6 @@ class Sake::Series
   def []=(*sake_index, value)
     values[index.narray_index(sake_index)] = value
   end
-end
 
-class Sake::Series::Initializer
-  class << self
-    def initialize_values(source, dtype)
-      if source.is_a? Array
-        array = source
-      elsif source.is_a? Hash
-        array = source.values
-      else
-        raise ArgumentError
-      end
-      
-      if dtype.nil?
-        Numo::NArray.from_array(array)
-      else
-        Numo.const_get(dtype).new(array.length).store array
-      end
-    end
-
-    def initialize_index(source, index)
-      return Sake::Index.new(index) unless index.nil?
-      
-      if source.is_a? Array
-        Sake::Index.new((0...(source.length)).to_a)
-      elsif source.is_a? Hash
-        Sake::Index.new(source.keys)
-      else
-        raise ArgumentError
-      end
-    end
   end
 end
