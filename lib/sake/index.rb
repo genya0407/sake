@@ -34,7 +34,7 @@ class Sake::Index
         raise ArgumentError
       end
 
-      [@array.find_index(sake_index)]
+      @array.find_index(sake_index)
     end
   end
 end

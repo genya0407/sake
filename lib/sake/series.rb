@@ -14,9 +14,13 @@ class Sake::Series
   end
   
   def [](*sake_index)
-    values_view = values[index.narray_index(sake_index)]
-    index_view = index.view(sake_index)
-    self.class.new(values_view, index: index_view, direct: true)
+    if sake_index.length == 1
+      values[index.narray_index(sake_index.first)]
+    else
+      values_view = values[index.narray_index(sake_index)]
+      index_view = index.view(sake_index)
+      self.class.new(values_view, index: index_view, direct: true)
+    end
   end
   
   def []=(*sake_index, value)
