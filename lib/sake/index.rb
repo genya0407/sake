@@ -1,3 +1,5 @@
+require 'sake/index/condition'
+
 class Sake::Index
   def initialize(array)
     if array.is_a? Array
@@ -9,10 +11,16 @@ class Sake::Index
     end
   end
   
-  def narray_index(sake_index)
-    positions(sake_index)
+  def narray_index(arg)
+    if arg.is_a? Array
+      positions_from_index(arg)
+    elsif arg.is_a? Condition
+      positions_from_condition(arg)
+    else
+      raise ArgumentError
+    end
   end
-  
+
   def view(sake_index)
     self.class.new(@array[positions(sake_index)])
   end
@@ -26,19 +34,15 @@ class Sake::Index
   end
 
   private
-  def positions(sake_index)
-    if sake_index.is_a? Array
-      unless sake_index.all? { |elem| @array.include? elem }
-        raise ArgumentError
-      end
-    
+  def positions_from_index(array)
+    if sake_index.all? { |elem| @array.include? elem }
       sake_index.map { |elem| @array.find_index(elem) }
     else
-      unless @array.include? sake_index
-        raise ArgumentError
-      end
-
-      @array.find_index(sake_index)
+      raise ArgumentError
     end
+  end
+
+  def positions_from_condition(condition)
+    positions_from_index(condition.array)
   end
 end
