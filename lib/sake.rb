@@ -1,4 +1,5 @@
 require 'numo/narray'
+require 'numo/gsl'
 
 require 'sake/version'
 require 'sake/series'
